@@ -7,36 +7,6 @@
 
 import Foundation
 
-enum RequestBodySelectOptionDictionaryValue: Encodable {
-    case text(_ value: String)
-    case number(_ value: UInt)
-    
-    enum CodingKeys: CodingKey {
-        case text
-        case number
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        switch self {
-            case .text(let value):
-                try container.encode(value, forKey: .text)
-            case .number(let value):
-                try container.encode(value, forKey: .number)
-        }
-    }
-}
-
-struct RequestBodySelectOption: Encodable {
-    let selections: [String: RequestBodySelectOptionDictionaryValue]
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.unkeyedContainer()
-        try container.encode(selections)
-    }
-    
-}
-
 enum RequestBodySortOption: String, Encodable {
     case ascending = "asc"
     case descending = "desc"
@@ -44,11 +14,11 @@ enum RequestBodySortOption: String, Encodable {
 
 struct RequestBodyPopulateOption: Encodable {
     let path: String
-    let select: RequestBodySelectOption
+    let select: [String: UInt]
 }
 
 struct RequestBodyOptions: Encodable {
-    let select: RequestBodySelectOption?
+    let select: [String: UInt]?
     let sort: RequestBodySortOption?
     let limit: UInt?
     let populate: [RequestBodyPopulateOption]?
@@ -75,8 +45,6 @@ struct RequestBody: Encodable {
 }
 
 protocol Request {
-    
     var endpoint: Endpoint { get }
     var body: RequestBody? { get }
-    
 }

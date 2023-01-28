@@ -11,7 +11,7 @@ struct Launch: Decodable {
     
     let id: String
     let name: String
-    let details: String
+    let details: String?
     let dateString: String
     let success: Bool
     let flightNumber: Int
@@ -36,7 +36,7 @@ struct LaunchPayload: Decodable {
     let id: String
     let name: String
     let type: String
-    let mass: String
+    let mass: Int?
     
     enum CodingKeys: String, CodingKey {
         case id
