@@ -12,9 +12,20 @@ enum RequestBodySortOption: String, Encodable {
     case descending = "desc"
 }
 
-struct RequestBodyPopulateOption: Encodable {
-    let path: String
-    let select: [String: UInt]
+struct RequestBodyPopulateOption: Encodable, Hashable {
+    let path: RequestBodyPopulateOptionPath
+    let select: [RequestBodyPopulateOptionSelectKey: UInt]
+}
+
+enum RequestBodyPopulateOptionPath: String, Encodable {
+    case payloads
+}
+
+enum RequestBodyPopulateOptionSelectKey: String, Encodable, CaseIterable {
+    case id
+    case name
+    case type
+    case mass = "mass_kg"
 }
 
 struct RequestBodyOptions: Encodable {
@@ -45,6 +56,15 @@ struct RequestBody: Encodable {
 }
 
 protocol Request {
-    var endpoint: Endpoint { get }
+    associatedtype E: Endpoint
+    
+    var endpoint: E { get }
     var body: RequestBody? { get }
+    var headers: [String: String] { get }
+}
+
+extension Request {
+    var headers: [String: String] {
+        ["Content-Type": "application/json"]
+    }
 }

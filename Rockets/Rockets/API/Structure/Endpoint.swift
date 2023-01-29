@@ -24,7 +24,6 @@ protocol Endpoint {
     var baseURL: String { get }
     var path: String { get }
     var method: RESTMethod { get }
-    var headers: [String: String] { get }
     var components: URLComponents { get }
 }
 
@@ -39,12 +38,12 @@ extension Endpoint {
         return components
     }
     
-    var headers: [String: String] {
-        ["Content-Type": "application/json"]
-    }
-    
     var method: RESTMethod {
         .post
+    }
+    
+    var scheme: EndpointScheme {
+        .https
     }
     
 }

@@ -24,12 +24,12 @@ final class NetworkEngine {
         self.urlSession = urlSession
     }
     
-    func execute<T: Decodable>(request: Request, returningType: T.Type) async throws -> T {
+    func execute<T: Decodable>(request: any Request, returningType: T.Type) async throws -> T {
         
         guard let url = request.endpoint.components.url else { throw APIError.invalidUrl }
         
         var urlRequest = URLRequest(url: url)
-        urlRequest.allHTTPHeaderFields = request.endpoint.headers
+        urlRequest.allHTTPHeaderFields = request.headers
         urlRequest.httpMethod = request.endpoint.method.rawValue
         urlRequest.httpBody = try encoder.encode(request.body)
         
