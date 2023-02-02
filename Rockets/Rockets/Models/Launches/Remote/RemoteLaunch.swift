@@ -1,5 +1,5 @@
 //
-//  Launch.swift
+//  RemoteLaunch.swift
 //  Rockets
 //
 //  Created by Afonso Rodrigues (Contractor) on 28/01/2023.
@@ -7,16 +7,15 @@
 
 import Foundation
 
-struct Launch: Decodable {
-    
+struct RemoteLaunch: Decodable {
     let id: String
     let name: String
     let details: String?
     let dateString: String
     let success: Bool
     let flightNumber: Int
-    let payloads: [LaunchPayload]
-    let links: LaunchLinks
+    let payloads: [RemoteLaunchPayload]
+    let links: RemoteLaunchLinks
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -28,11 +27,9 @@ struct Launch: Decodable {
         case payloads
         case links
     }
-    
 }
 
-struct LaunchPayload: Decodable {
-    
+struct RemoteLaunchPayload: Decodable {
     let id: String
     let name: String
     let type: String
@@ -44,11 +41,10 @@ struct LaunchPayload: Decodable {
         case type
         case mass = "mass_kg"
     }
-    
 }
 
-struct LaunchLinks: Decodable {
-    let patchLinks: LaunchPatchLinks
+struct RemoteLaunchLinks: Decodable {
+    let patchLinks: RemoteLaunchPatchLinks
     let webcast: String
     let article: String
     let wikipedia: String
@@ -59,10 +55,9 @@ struct LaunchLinks: Decodable {
         case article
         case wikipedia
     }
-    
 }
 
-struct LaunchPatchLinks: Decodable {
+struct RemoteLaunchPatchLinks: Decodable {
     let small: String?
     
     enum CodingKeys: String, CodingKey {

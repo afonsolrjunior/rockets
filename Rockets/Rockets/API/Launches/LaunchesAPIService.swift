@@ -22,7 +22,7 @@ final class RemoteLaunchesAPIService: APIService {
         let request = requestBuilder
             .build()
         
-        let response = try await networkEngine.execute(request: request, returningType: LaunchesResponse.self)
+        let response = try await networkEngine.execute(request: request, returningType: RemoteLaunchesPagedResponse.self)
         let viewModels = response.launches.map { launch in
             LaunchViewModel(missionName: launch.name,
                             missionDate: launch.dateString,

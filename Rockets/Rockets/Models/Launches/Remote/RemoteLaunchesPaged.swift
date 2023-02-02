@@ -1,5 +1,5 @@
 //
-//  LaunchesResponse.swift
+//  RemoteLaunchesPagedResponse.swift
 //  Rockets
 //
 //  Created by Afonso Rodrigues (Contractor) on 28/01/2023.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct LaunchesResponse: Decodable {
-    let launches: [Launch]
+struct RemoteLaunchesPagedResponse: Decodable {
+    let launches: [RemoteLaunch]
     let hasNextPage: Bool
     
     enum CodingKeys: String, CodingKey {

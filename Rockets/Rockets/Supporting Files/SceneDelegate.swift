@@ -19,8 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let viewController = ViewController()
-        viewController.view.backgroundColor = .systemMint
+        let builder = LaunchesRequestBuilder(endpoint: .launches)
+            .add(limitOption: 10)
+            .add(populateOptionPath: .payloads,
+                 properties: RequestBodyPopulateOptionSelectKey.allCases)
+        let engine = NetworkEngine()
+        let apiService = RemoteLaunchesAPIService(networkEngine: engine, requestBuilder: builder)
+        let viewModel = LaunchesViewModel(apiService: apiService)
+        let viewController = LaunchesViewController(viewModel: viewModel)
         window?.rootViewController = viewController
         
         window?.makeKeyAndVisible()

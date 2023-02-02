@@ -8,12 +8,11 @@
 import Foundation
 
 struct LaunchViewModel {
-    
-    private let missionName: String
-    private let missionDate: String
-    private let missionDetails: String
-    private let success: Bool
-    private let missionPatchLink: String
+    let missionName: String
+    let missionDate: String
+    let missionDetails: String
+    let success: Bool
+    let missionPatchLink: String
     
     init(missionName: String, missionDate: String, missionDetails: String, success: Bool, missionPatchLink: String) {
         self.missionName = missionName
@@ -22,5 +21,4 @@ struct LaunchViewModel {
         self.success = success
         self.missionPatchLink = missionPatchLink
     }
-    
 }
