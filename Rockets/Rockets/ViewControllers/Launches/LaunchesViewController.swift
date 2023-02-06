@@ -10,12 +10,12 @@ import UIKit
 class LaunchesViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
-        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
-        let layout = UICollectionViewCompositionalLayout.list(using: configuration)
+        let layout = CollectionViewLayoutFactory.makeCardsLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: String(describing: UICollectionViewCell.self))
+        collectionView.delegate = self
+        collectionView.register(LaunchCollectionViewCell.self, forCellWithReuseIdentifier: LaunchCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
     
@@ -88,16 +88,25 @@ extension LaunchesViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UICollectionViewCell.self),
-                                                      for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LaunchCollectionViewCell.reuseIdentifier,
+                                                            for: indexPath) as? LaunchCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
-        var configuration = UIListContentConfiguration.cell()
-        configuration.text = viewModel.items[indexPath.row].missionName
-        configuration.secondaryText = viewModel.items[indexPath.row].missionDate
-        cell.contentConfiguration = configuration
+        cell.setup(using: viewModel.items[indexPath.row])
         
         return cell
     }
+    
+}
+
+extension LaunchesViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+    }
+    
+    
     
 }
 

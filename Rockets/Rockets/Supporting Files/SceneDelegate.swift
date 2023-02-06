@@ -20,11 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let builder = LaunchesRequestBuilder(endpoint: .launches)
-            .add(limitOption: 10)
+            .add(limitOption: 20)
             .add(populateOptionPath: .payloads,
                  properties: RequestBodyPopulateOptionSelectKey.allCases)
         let engine = NetworkEngine()
-        let apiService = RemoteLaunchesAPIService(networkEngine: engine, requestBuilder: builder)
+        let mapper = LaunchMapper()
+        let apiService = RemoteLaunchesAPIService(networkEngine: engine, requestBuilder: builder, mapper: mapper)
         let viewModel = LaunchesViewModel(apiService: apiService)
         let viewController = LaunchesViewController(viewModel: viewModel)
         window?.rootViewController = viewController
